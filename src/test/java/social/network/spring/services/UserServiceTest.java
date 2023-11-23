@@ -3,9 +3,9 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import social.network.spring.dtos.UserDto;
-import social.network.spring.repositories.UserRepository;
-import social.network.spring.service.UserService;
+import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.infra.gateway.bd.UserRepository;
+import social.network.spring.domain.service.UserService;
 import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.*;
 

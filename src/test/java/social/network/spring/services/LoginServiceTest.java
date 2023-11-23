@@ -6,11 +6,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
-import social.network.spring.dtos.UserDto;
-import social.network.spring.entities.User;
-import social.network.spring.repositories.UserRepository;
-import social.network.spring.service.LoginService;
-import social.network.spring.service.UserService;
+import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.domain.entities.User;
+import social.network.spring.infra.gateway.bd.UserRepository;
+import social.network.spring.domain.service.LoginService;
+import social.network.spring.domain.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;

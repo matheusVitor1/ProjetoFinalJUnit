@@ -1,13 +1,13 @@
-package social.network.spring.controllers;
+package social.network.spring.infra.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import social.network.spring.dtos.UserAuthenticatedDto;
-import social.network.spring.dtos.UserDto;
-import social.network.spring.entities.User;
-import social.network.spring.service.UserService;
+import social.network.spring.domain.dtos.UserAuthenticatedDto;
+import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.domain.entities.User;
+import social.network.spring.domain.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;

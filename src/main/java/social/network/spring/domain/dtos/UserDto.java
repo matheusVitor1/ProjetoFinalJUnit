@@ -1,4 +1,4 @@
-package social.network.spring.dtos;
+package social.network.spring.domain.dtos;
 
 import lombok.*;
 
@@ -9,9 +9,7 @@ import lombok.*;
 @Setter
 public class UserDto {
     public long id;
-    public String photoUrl;
     public String name;
-    public int age;
     public String birthday;
     public String identity;
     public boolean active;
