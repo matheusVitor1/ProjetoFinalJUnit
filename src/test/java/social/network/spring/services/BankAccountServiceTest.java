@@ -52,21 +52,13 @@ public class BankAccountServiceTest {
 
 
     @Test
-    void testFindBankAccountByIdentity() {
-        // Inicializa os mocks
-        MockitoAnnotations.openMocks(this);
-
-        // Cria um usuário com identidade "123456789"
+    void testFindBankAccountByUser() {
         User user = new User(1L, "John Doe", "1990-01-01", "123456789", true, "john@example.com", "password");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(bankAccountRepository.findByUser(any())).thenReturn(new BankAccount());
 
-        // Configura o comportamento simulado do repository
-        when(bankAccountRepository.findByUserId(1L)).thenReturn(Optional.of(new BankAccount()));
-
-        // Chama o método do serviço
-        Optional<BankAccount> result = bankAccountService.findByUserId(1L);
-
-        // Verifica se o resultado não é nulo
-        assertEquals(Optional.of(new BankAccount()), result);
+        BankAccount result = bankAccountService.findByUserId(1L);
+        assertEquals(new BankAccount(), result);
     }
 
 

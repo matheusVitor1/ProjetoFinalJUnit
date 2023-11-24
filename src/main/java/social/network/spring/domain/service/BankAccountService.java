@@ -42,8 +42,9 @@ public class BankAccountService {
 
     }
 
-    public Optional<BankAccount> findByUserId(Long userId) {
-        return bankAccountRepository.findByUserId(userId);
+    public BankAccount findByUserId(Long userId) {
+        Optional<User> optUser = userRepository.findById(userId);
+        return bankAccountRepository.findByUser(optUser);
     }
 
 
