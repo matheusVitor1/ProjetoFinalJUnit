@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class UserServiceTest {
+public class UserServiceTest2 {
     @Mock
     private UserRepository userRepository;
 
@@ -85,5 +85,4 @@ public class UserServiceTest {
 
         verify(userRepository, never()).save(any());
     }
-
 }

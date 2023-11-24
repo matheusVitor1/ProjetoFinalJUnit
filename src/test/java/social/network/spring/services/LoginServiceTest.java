@@ -40,7 +40,6 @@ class LoginServiceTest {
 
         UserDto userDto = UserDto.builder()
                 .name("Matheus Vitor")
-                .photoUrl("https//:minhafoto.jpg")
                 .identity("123.456.789-52")
                 .active(true)
                 .birthday("24/08/1999")
@@ -66,7 +65,6 @@ class LoginServiceTest {
 
         UserDto userDto = UserDto.builder()
                 .name("Matheus Vitor")
-                .photoUrl("https//:minhafoto.jpg")
                 .identity("987.654.321-52")
                 .active(true)
                 .birthday("24/08/1999")
@@ -88,7 +86,6 @@ class LoginServiceTest {
 
         UserDto userDto = UserDto.builder()
                 .name("Matheus Vitor")
-                .photoUrl("https//:minhafoto.jpg")
                 .identity("987.654.321-52")
                 .active(true)
                 .birthday("24/08/1999")

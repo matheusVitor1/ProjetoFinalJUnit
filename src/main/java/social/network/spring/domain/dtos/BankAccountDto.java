@@ -13,8 +13,9 @@ public class BankAccountDto {
 
     private Long id;
     private Long agencia;
-    private Long digito;
+    private String digito;
     private BigDecimal saldo;
+    private int accountType;
     private String userIdentity;
     private Long userID;
 

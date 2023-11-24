@@ -46,4 +46,14 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public User(Long id, String name, String birthday, String identity, boolean active, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.birthday = birthday;
+        this.identity = identity;
+        this.active = active;
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -19,17 +19,20 @@ public class BankAccount {
     private Long agencia;
 
     @Column(nullable = false, unique = true)
-    private Long digito;
+    private String digito;
 
     @Column(nullable = false)
     private BigDecimal saldo;
 
     @OneToOne
-    @Column(nullable = false)
+    @PrimaryKeyJoinColumn
     private User user;
 
+    public BankAccount() {
 
-    public BankAccount(Long agencia, Long digito, BigDecimal saldo, User user) {
+    }
+
+    public BankAccount(Long agencia, String digito, BigDecimal saldo, User user) {
         this.agencia = agencia;
         this.digito = digito;
         this.saldo = saldo;
