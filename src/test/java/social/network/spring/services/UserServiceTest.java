@@ -56,6 +56,7 @@ public class UserServiceTest {
         boolean result = userService.saveUser(userDto);
 
         assertEquals(true, result);
+        verify(userRepository, times(1)).save(any());
     }
 
 

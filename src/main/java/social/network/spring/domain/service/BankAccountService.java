@@ -68,28 +68,28 @@ public class BankAccountService {
         return accountGenerated;
     }
 
-//    public boolean createAndSaveNewBankAccount(BankAccountDto bankAccountDto) {
-//        BankAccount existingAccount = findByUserIdentity(bankAccountDto.getUserIdentity());
-//        if (existingAccount == null) {
-//            User user = userService.findById(bankAccountDto.getUserID());
-//            if (user != null) {
-//                String accountNumber = generateAccountNumberAndValidateIfDuplicate(bankAccountDto.getAccountType());
-//                BankAccount newAccount = new BankAccount(
-//                        bankAccountDto.getAgencia(),
-//                        accountNumber,
-//                        BigDecimal.ZERO,
-//                        user
-//                );
-//
-//                bankAccountRepository.save(newAccount);
-//                return true;
-//            } else {
-//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
-//            }
-//        } else {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuário já cadastrado");
-//        }
-//    }
+    public boolean createAndSaveNewBankAccount(BankAccountDto bankAccountDto) {
+        BankAccount existingAccount = findByUserId(bankAccountDto.getUserID());
+        if (existingAccount == null) {
+            User user = userService.findById(bankAccountDto.getUserID());
+            if (user != null) {
+                String accountNumber = generateAccountNumberAndValidateIfDuplicate(bankAccountDto.getAccountType());
+                BankAccount newAccount = new BankAccount(
+                        bankAccountDto.getAgencia(),
+                        accountNumber,
+                        BigDecimal.ZERO,
+                        user
+                );
+
+                bankAccountRepository.save(newAccount);
+                return true;
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuário já cadastrado");
+        }
+    }
 
 
 
