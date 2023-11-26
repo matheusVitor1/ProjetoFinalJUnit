@@ -42,54 +42,52 @@ public class BankAccountService {
 
     }
 
-    public BankAccount findByUserId(Long userId) {
-        Optional<User> optUser = userRepository.findById(userId);
-        return bankAccountRepository.findByUser(optUser);
+    public BankAccount findBankAccountByUser(Long userId) {
+
+        return bankAccountRepository.findByUser(userId);
     }
 
 
-    public String generateAccountNumberAndValidateIfDuplicate(int accounType)  {
+    public String generateAccountNumber(int accounType)  {
         List<BankAccount> accounts = bankAccountRepository.findAll();
         Random random = new Random();
-
         String prefix = (accounType == 1) ? "CC" : "CP";
-
         int randomAccountNumber = 100000 + random.nextInt(900000);
-
         String accountGenerated = prefix + randomAccountNumber;
 
-        boolean matchedBankAccount = accounts.stream().anyMatch(account -> account.getDigito().equals(accountGenerated));
+        boolean matchedBankAccount = accounts.stream().anyMatch(
+                account -> account.getDigito().equals(accountGenerated));
 
         if (matchedBankAccount) {
-
-            return  generateAccountNumberAndValidateIfDuplicate( (prefix.equals("CC")) ? 1 : 2);
+            return  generateAccountNumber((prefix.equals("CC")) ? 1 : 2);
         }
-
         return accountGenerated;
     }
 
     public boolean createAndSaveNewBankAccount(BankAccountDto bankAccountDto) {
-        BankAccount existingAccount = findByUserId(bankAccountDto.getUserID());
-        if (existingAccount == null) {
-            User user = userService.findById(bankAccountDto.getUserID());
-            if (user != null) {
-                String accountNumber = generateAccountNumberAndValidateIfDuplicate(bankAccountDto.getAccountType());
-                BankAccount newAccount = new BankAccount(
-                        bankAccountDto.getAgencia(),
-                        accountNumber,
-                        BigDecimal.ZERO,
-                        user
-                );
-
-                bankAccountRepository.save(newAccount);
-                return true;
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuário já cadastrado");
+        BankAccount existingAccount = findBankAccountByUser(bankAccountDto.getUserID());
+        if(existingAccount != null){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Conta já existente");
         }
+
+        User user = userService.findById(bankAccountDto.getUserID());
+        if(user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
+        }
+
+        String accountNumber = generateAccountNumber(bankAccountDto.getAccountType());
+        BankAccount newAccount = new BankAccount(
+                bankAccountDto.getAgencia(),
+                accountNumber,
+                BigDecimal.ZERO,
+                user
+        );
+        bankAccountRepository.save(newAccount);
+        return true;
     }
+
+
+
 
 
 

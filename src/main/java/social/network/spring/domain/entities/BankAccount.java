@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "ACCOUNT")
@@ -24,9 +25,13 @@ public class BankAccount {
     @Column(nullable = false)
     private BigDecimal saldo;
 
+
     @OneToOne
     @PrimaryKeyJoinColumn
     private User user;
+
+    @OneToMany
+    private List<Transaction> transactions;
 
     public BankAccount() {
 

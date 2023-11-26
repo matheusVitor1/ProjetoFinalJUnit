@@ -8,7 +8,7 @@ import social.network.spring.domain.entities.User;
 
 import java.util.List;
 @Service
-public class LoginService {
+public class  LoginService {
 
     private final PasswordEncoder passwordEncoder;
 

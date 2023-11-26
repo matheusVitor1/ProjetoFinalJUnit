@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
@@ -35,50 +35,51 @@ public class UserServiceTest {
 
 
     @Test
-    void findById() {
-
+    void testFindById() {
+        //Given
         User user = new User(1L, "John Doe", "1990-01-01", "123456789", true, "john@example.com", "password");
+
+        //When
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
+        //Then
         User result = userService.findById(1L);
-
         assertEquals(user, result);
     }
     @Test
     void testSaveUser() {
+        //When
         when(userRepository.findAll()).thenReturn(new ArrayList<>());
         when(userRepository.save(any(User.class))).thenReturn(Mockito.mock(User.class));
-
         when(passwordEncoder.encode(any(String.class))).thenReturn("hashedPassword");
 
+        //Then
         UserDto userDto = new UserDto(1L,"John Doe", "1990-01-01", "123456789",true,"john@example.com", "password" );
-
         boolean result = userService.saveUser(userDto);
-
         assertEquals(true, result);
         verify(userRepository, times(1)).save(any());
     }
 
 
     @Test
-    void saveUser_IdentityConflict() {
-
+    void testSaveUser_IdentityConflict() {
+        //When
         when(userRepository.findAll()).thenReturn(Arrays.asList(new User(1L, "John Doe", "1990-01-01", "123456789", true, "john@example.com", "password")));
 
+        //Then
         UserDto userDto = new UserDto(2L, "Jane Doe", "1992-03-15", "123456789", true, "jane@example.com", "password");
         assertThrows(ResponseStatusException.class, () -> userService.saveUser(userDto));
-
         verify(userRepository, never()).save(any());
     }
 
     @Test
-    void saveUser_EmailConflict() {
-
+    void testSaveUser_EmailConflict() {
+        //When
         when(userRepository.findAll()).thenReturn(Arrays.asList(new User(1L, "John Doe", "1990-01-01", "123456789", true, "john@example.com", "password")));
 
+        //Then
         UserDto userDto = new UserDto(2L, "Jane Doe", "1992-03-15", "987654321", true, "john@example.com", "password");
         assertThrows(ResponseStatusException.class, () -> userService.saveUser(userDto));
-
         verify(userRepository, never()).save(any());
     }
 
