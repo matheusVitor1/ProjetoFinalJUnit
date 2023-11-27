@@ -2,8 +2,8 @@ package social.network.spring.domain.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import social.network.spring.domain.dtos.BankAccountDto;
-import social.network.spring.domain.dtos.TransactionDto;
+import social.network.spring.domain.dtos.Transaction.TransactionRequestPostDto;
+import social.network.spring.domain.dtos.Transaction.TransactionResponseDto;
 import social.network.spring.domain.entities.BankAccount;
 import social.network.spring.domain.entities.Transaction;
 import social.network.spring.infra.gateway.bd.TransactionRepository;
@@ -26,8 +26,10 @@ public class TransactionService {
         return transactionRepository.findByBankAccountId(id);
     }
 
-    public boolean executeWithdraw(TransactionDto transactionDto) {
-        BankAccount accountFound = bankAccountService.findBankAccountByUser(transactionDto.getUserId());
+
+
+    public boolean executeWithdraw(TransactionRequestPostDto transactionRequestPostDto) {
+        BankAccount accountFound = bankAccountService.findBankAccountByUser(transactionRequestPostDto.getUserId());
 
         if (accountFound == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Conta não encontrada");
@@ -37,24 +39,24 @@ public class TransactionService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Saldo insuficiente");
         }
 
-        if (transactionDto.getTransactionValue().compareTo(accountFound.getSaldo()) > 0) {
+        if (transactionRequestPostDto.getTransactionValue().compareTo(accountFound.getSaldo()) > 0) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Valor é maior que o que tem em conta");
         }
 
-        accountFound.setSaldo(accountFound.getSaldo().subtract(transactionDto.getTransactionValue()));
+        accountFound.setSaldo(accountFound.getSaldo().subtract(transactionRequestPostDto.getTransactionValue()));
         Transaction newTransaction = new Transaction("Withdraw", accountFound);
         transactionRepository.save(newTransaction);
         return true;
     }
 
-    public boolean executeDeposit(TransactionDto transactionDto){
-        BankAccount accountFound = bankAccountService.findBankAccountByUser(transactionDto.getUserId());
+    public boolean executeDeposit(TransactionRequestPostDto transactionRequestPostDto){
+        BankAccount accountFound = bankAccountService.findBankAccountByUser(transactionRequestPostDto.getUserId());
 
         if (accountFound == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Conta não encontrada");
         }
 
-        accountFound.setSaldo(accountFound.getSaldo().add(transactionDto.getTransactionValue()));
+        accountFound.setSaldo(accountFound.getSaldo().add(transactionRequestPostDto.getTransactionValue()));
         Transaction newTransaction = new Transaction("Deposit", accountFound);
         transactionRepository.save(newTransaction);
         return true;

@@ -3,14 +3,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import social.network.spring.domain.dtos.BankAccountDto;
+import social.network.spring.domain.dtos.BankAccount.BankAccountDto;
 import social.network.spring.domain.entities.BankAccount;
 import social.network.spring.domain.entities.User;
 import social.network.spring.infra.gateway.bd.BankAccountRepository;
 import social.network.spring.infra.gateway.bd.UserRepository;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 
@@ -44,7 +43,7 @@ public class BankAccountService {
 
     public BankAccount findBankAccountByUser(Long userId) {
 
-        return bankAccountRepository.findByUser(userId);
+        return bankAccountRepository.findByUserId(userId);
     }
 
 

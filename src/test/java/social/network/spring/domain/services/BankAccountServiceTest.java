@@ -1,11 +1,11 @@
-package social.network.spring.services;
+package social.network.spring.domain.services;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
-import social.network.spring.domain.dtos.BankAccountDto;
+import social.network.spring.domain.dtos.BankAccount.BankAccountDto;
 import social.network.spring.domain.entities.BankAccount;
 import social.network.spring.domain.entities.User;
 import social.network.spring.domain.service.BankAccountService;
@@ -53,7 +53,7 @@ public class BankAccountServiceTest {
     void testFindBankAccountByUser() {
         BankAccount expectedBankAccount = new BankAccount();
         expectedBankAccount.setId(1L);
-        when(bankAccountRepository.findByUser(any())).thenReturn(expectedBankAccount);
+        when(bankAccountRepository.findByUserId(any())).thenReturn(expectedBankAccount);
         BankAccount result = bankAccountService.findBankAccountByUser(1L);
         assertEquals(expectedBankAccount, result);
     }
@@ -132,7 +132,7 @@ public class BankAccountServiceTest {
 
         User user = new User(1L, "John Doe", "1990-01-01", "123456789", true, "john@example.com", "password");
 
-        when(bankAccountRepository.findByUser(any())).thenReturn(new BankAccount());
+        when(bankAccountRepository.findByUserId(any())).thenReturn(new BankAccount());
 
         // When & Then
         assertThrows(ResponseStatusException.class, () -> {

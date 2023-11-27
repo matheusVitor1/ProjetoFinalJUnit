@@ -1,14 +1,12 @@
-package social.network.spring.services;
+package social.network.spring.domain.services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.DirtiesContext;
-import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.domain.dtos.User.UserDto;
 import social.network.spring.domain.entities.User;
 import social.network.spring.infra.gateway.bd.UserRepository;
 import social.network.spring.domain.service.LoginService;
@@ -17,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class LoginServiceTest {
 
     @Autowired
@@ -31,6 +29,7 @@ class LoginServiceTest {
 
     @Autowired
     private LoginService loginService;
+
 
     @Test
     void authenticateUserValidCredentialsShouldReturnUser() {

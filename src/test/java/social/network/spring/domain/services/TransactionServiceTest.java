@@ -1,4 +1,4 @@
-package social.network.spring.services;
+package social.network.spring.domain.services;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
-import social.network.spring.domain.dtos.TransactionDto;
+import social.network.spring.domain.dtos.Transaction.TransactionRequestPostDto;
 import social.network.spring.domain.entities.BankAccount;
 import social.network.spring.domain.entities.Transaction;
 import social.network.spring.domain.entities.User;
@@ -53,10 +53,10 @@ public class TransactionServiceTest {
         BankAccount sender = new BankAccount(1234L, "CC123456", BigDecimal.valueOf(500), new User());
         when(bankAccountService.findBankAccountByUser(any())).thenReturn(sender);
 
-        TransactionDto transactionDto = new TransactionDto(BigDecimal.valueOf(50), 1L, null, null);
+        TransactionRequestPostDto transactionRequestPostDto = new TransactionRequestPostDto(BigDecimal.valueOf(50), 1L, null, null);
 
         // When
-        boolean result = transactionService.executeWithdraw(transactionDto);
+        boolean result = transactionService.executeWithdraw(transactionRequestPostDto);
 
         // Then
         assertTrue(result);
@@ -69,10 +69,10 @@ public class TransactionServiceTest {
         // Given
         when(bankAccountService.findBankAccountByUser(1L)).thenReturn(null);
 
-        TransactionDto transactionDto = new TransactionDto(BigDecimal.valueOf(50), 1L, null, null);
+        TransactionRequestPostDto transactionRequestPostDto = new TransactionRequestPostDto(BigDecimal.valueOf(50), 1L, null, null);
 
         // When and Then
-        assertThrows(ResponseStatusException.class, () -> transactionService.executeWithdraw(transactionDto));
+        assertThrows(ResponseStatusException.class, () -> transactionService.executeWithdraw(transactionRequestPostDto));
         verify(bankAccountService, times(1)).findBankAccountByUser(1L);
         verify(transactionRepository, never()).save(any(Transaction.class));
     }
@@ -82,22 +82,22 @@ public class TransactionServiceTest {
         // Given
         when(bankAccountService.findBankAccountByUser(1L)).thenReturn(new BankAccount(1234L, "CC123456", BigDecimal.valueOf(30), new User()));
 
-        TransactionDto transactionDto = new TransactionDto(BigDecimal.valueOf(50), 1L, null, null);
+        TransactionRequestPostDto transactionRequestPostDto = new TransactionRequestPostDto(BigDecimal.valueOf(50), 1L, null, null);
 
         // When and Then
-        assertThrows(ResponseStatusException.class, () -> transactionService.executeWithdraw(transactionDto));
+        assertThrows(ResponseStatusException.class, () -> transactionService.executeWithdraw(transactionRequestPostDto));
         verify(transactionRepository, never()).save(any(Transaction.class));
     }
 
     @Test
     void testExecuteDeposit_success(){
         // Given
-        TransactionDto transactionDto = new TransactionDto(BigDecimal.valueOf(50), 1L, null, null);
+        TransactionRequestPostDto transactionRequestPostDto = new TransactionRequestPostDto(BigDecimal.valueOf(50), 1L, null, null);
         BankAccount sender = new BankAccount(1234L, "CC123456", BigDecimal.valueOf(500), new User());
 
         //When
         when(bankAccountService.findBankAccountByUser(any())).thenReturn(sender);
-        boolean result = transactionService.executeDeposit(transactionDto);
+        boolean result = transactionService.executeDeposit(transactionRequestPostDto);
 
         //Then
         assertEquals(BigDecimal.valueOf(550), sender.getSaldo());
@@ -111,10 +111,10 @@ public class TransactionServiceTest {
         // Given
         when(bankAccountService.findBankAccountByUser(1L)).thenReturn(null);
 
-        TransactionDto transactionDto = new TransactionDto(BigDecimal.valueOf(50), 1L, null, null);
+        TransactionRequestPostDto transactionRequestPostDto = new TransactionRequestPostDto(BigDecimal.valueOf(50), 1L, null, null);
 
         // When and Then
-        assertThrows(ResponseStatusException.class, () -> transactionService.executeDeposit(transactionDto));
+        assertThrows(ResponseStatusException.class, () -> transactionService.executeDeposit(transactionRequestPostDto));
         verify(bankAccountService, times(1)).findBankAccountByUser(1L);
         verify(transactionRepository, never()).save(any(Transaction.class));
 

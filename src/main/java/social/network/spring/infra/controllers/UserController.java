@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import social.network.spring.domain.dtos.UserAuthenticatedDto;
-import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.domain.dtos.User.UserAuthenticatedDto;
+import social.network.spring.domain.dtos.User.UserDto;
 import social.network.spring.domain.entities.User;
 import social.network.spring.domain.service.UserService;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
-    private final UserService userService;
+    private UserService userService;
 
     @PostMapping("/new")
     public ResponseEntity<Map<String, String>> createUser (@RequestBody UserDto userDto){
@@ -26,7 +26,6 @@ public class UserController {
             response.put("message", "usuário criado");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            response.put("message", "usuário já cadastrado");
             return new ResponseEntity<>(response,HttpStatus.CONFLICT);
         }
     }

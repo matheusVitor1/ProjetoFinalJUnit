@@ -1,21 +1,19 @@
-package social.network.spring.services;
+package social.network.spring.domain.services;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
-import social.network.spring.domain.dtos.UserDto;
+import social.network.spring.domain.dtos.User.UserDto;
 import social.network.spring.domain.entities.User;
 import social.network.spring.domain.service.UserService;
 import social.network.spring.infra.gateway.bd.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

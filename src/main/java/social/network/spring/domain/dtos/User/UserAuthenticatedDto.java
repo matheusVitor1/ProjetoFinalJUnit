@@ -1,4 +1,4 @@
-package social.network.spring.domain.dtos;
+package social.network.spring.domain.dtos.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
